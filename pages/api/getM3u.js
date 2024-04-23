@@ -144,7 +144,7 @@ fetch("https://tplayapi.code-crafters.app/321codecrafters/hmac.json")
         return response.json();
     })
     .then(data => {
-        hmacValue = data.data.hmac.hdtl.value;
+        hmacValue = data.data.hmac.hdnea.value;
     })
     .catch(error => {
         console.error('Error fetching and rearranging HMAC data:', error);
