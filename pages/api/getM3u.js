@@ -144,7 +144,7 @@ fetch("https://tplayapi.code-crafters.app/321codecrafters/hmac.json")
         return response.json();
     })
     .then(data => {
-        hmacValue = data.data.hmac.hdnea.value;
+        hmacValue = data.data.hmac.hdtl.value;
     })
     .catch(error => {
         console.error('Error fetching and rearranging HMAC data:', error);
@@ -180,10 +180,10 @@ while (chanIds.length > 0) {
                         key_extracted: channel.key_extracted,
                         pssh: channel.pssh,
                         //clearkey: channel.clearkey?.hex,
-						clearkey: channel.clearkeys ? JSON.stringify(channel.clearkeys[0].base64) : null,
+						clearkey: channel.clearkeys ? JSON.stringify(channel.clearkeys[1].base64) : null,
                         hma: hmacValue // Adding HMAC value to the channel data
                     };
-					
+
                     result.push(rearrangedChannel);
                 });
             } else {
@@ -265,13 +265,13 @@ const generateM3u = async (ud) => {
                 chanJwt = await getJWT(paramsForJwt, ud);
                 chanJwt = chanJwt.token;
                 for (let i = 0; i < chansList.length; i++) {
-                        m3uStr += '#EXTINF:-1  tvg-id=\"' + chansList[i].id.toString() + '\"  ';                        
+                        m3uStr += '#EXTINF:-1  tvg-id=\"' +ts+chansList[i].id.toString() + '\"  ';
                         m3uStr += 'group-title=\"' + (chansList[i].group_title) + '\", tvg-logo=\"https://mediaready.videoready.tv/tatasky-epg/image/fetch/f_auto,fl_lossy,q_auto,h_250,w_250/' + (chansList[i].tvg_logo) + '\", ' + chansList[i].name + '\n';
                         m3uStr += '#KODIPROP:inputstream.adaptive.license_type=clearkey' + '\n';
-                        m3uStr += '#KODIPROP:inputstream.adaptive.license_key=' + chansList[i].clearkey + '\n';	
+                        m3uStr += '#KODIPROP:inputstream.adaptive.license_key=' + chansList[i].clearkey + '\n';
                         //m3uStr += chanJwt + '\n';
-			m3uStr += chansList[i].stream_url + '?' + chansList[i].hma + '\n\n';			
-			
+			m3uStr += chansList[i].stream_url + '?' + chansList[i].hma + '\n\n';
+
         }
         console.log('all done!');
     } else {
